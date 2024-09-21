@@ -3,8 +3,8 @@ let canvas = document.getElementById('canvas');
 const ctx = canvas.getContext("2d");
 /** @type {HTMLCanvasElement} */
 
-canvas.width = window.innerWidth - 60;
-canvas.height = 500;
+canvas.width = window.innerWidth - 380;
+canvas.height = 600;
 let canvasWidth = canvas.width;
 let canvasHeight = canvas.height;
 let canvasColor="white"
@@ -31,13 +31,27 @@ currentStep++;
 
 // Cambiar color
 function change_color(color) {
+
+    if (isDrawing && !isErasing) { 
     pen.changeColor(color);
 }
-
+}
 // Cambiar ancho de la línea
 function change_LineWidth(newWidth) {
     pen.changeLineWidth(newWidth);
 }
+
+
+function RestablecerRangos(){
+    pen.changeColor('black');
+    pen.changeLineWidth(5);
+    document.getElementById("lineWidth").value = 5;  // Valor medio de linea
+    document.getElementById("brilloRange").value = 0;  // Valor medio de brillo
+    document.getElementById("saturacionRange").value = 100;  // Valor medio de saturación
+
+}
+
+
 
 // Función para limpiar el canvas
 function clearCanvas() {
@@ -55,9 +69,7 @@ function clearCanvas() {
 
     // Restablecer los rangos 
     
-    document.getElementById("lineWidth").value = 5;  // Valor medio de linea
-    document.getElementById("brilloRange").value = 0;  // Valor medio de brillo
-    document.getElementById("saturacionRange").value = 100;  // Valor medio de saturación
+   RestablecerRangos();
     
     // Restablecer el input de archivo para permitir cargar la misma imagen
     document.getElementById('imageInput').value = '';
@@ -68,6 +80,7 @@ function clearCanvas() {
 
 // Función para deshacer la última acción
 function undo() {
+    
     if (currentStep > 0) {
         currentStep--;
         let previousState = drawingHistory[currentStep];
@@ -82,6 +95,8 @@ function undo() {
         // Si ya estás en el primer paso y hay una imagen original, restaura esa imagen
         ctx.putImageData(originalImageData, 0, 0);
     }
+
+    RestablecerRangos();
 }
 
 
@@ -124,10 +139,11 @@ canvas.addEventListener('mousemove', (e) => {
     }
 });
 
-canvas.addEventListener('mouseup', () => {
-    mouseDown = false;
-    pen.stopDrawing();
-
+document.addEventListener('mouseup', () => {
+    if (mouseDown) {
+        mouseDown = false;
+        pen.stopDrawing();
+    }
     // Guarda el estado del canvas solo cuando se termina el trazo
     if (currentStep < drawingHistory.length - 1) {
         drawingHistory.length = currentStep + 1;  // Elimina estados futuros si dibujas luego de deshacer

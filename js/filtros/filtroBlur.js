@@ -1,4 +1,5 @@
 class FiltroBlur extends Filtro {
+   
     aplicarFiltro() {
         const width = this.width;
         const height = this.height;
