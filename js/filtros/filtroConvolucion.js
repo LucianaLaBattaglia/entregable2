@@ -1,44 +1,35 @@
 
 class FiltroConvolucion extends Filtro {
-    constructor(ctx, width, height, kernel) {
+    constructor(ctx, width, height) {
         super(ctx, width, height);
-        this.kernel = kernel; // Matriz de convolución
+        this.kernel = [
+            -1, -1, -1,
+            -1,  8, -1,
+            -1, -1, -1
+        ];
     }
 
-    processPixels(data) {
-        const output = new Uint8ClampedArray(data.length);
-        const width = this.width;
-        const height = this.height;
+    calcularNuevoValorPixel(x, y, data, output) {
+        let sumR = 0, sumG = 0, sumB = 0;
+        let kernelSize = 3;
+        
+        for (let j = -1; j <= 1; j++) {
+            for (let i = -1; i <= 1; i++) {
+                let offsetX = x + i;
+                let offsetY = y + j;
+                const index = (offsetY * this.width + offsetX) * 4;
+                let weight = this.kernel[(j + 1) * kernelSize + (i + 1)];
 
-        // Recorremos los píxeles excluyendo los bordes
-        for (let y = 1; y < height - 1; y++) {
-            for (let x = 1; x < width - 1; x++) {
-                let r = 0, g = 0, b = 0;
-
-                for (let j = -1; j <= 1; j++) {
-                    for (let i = -1; i <= 1; i++) {
-                        let offsetX = x + i;
-                        let offsetY = y + j;
-                        let weight = this.kernel[(j + 1) * 3 + (i + 1)];
-
-                        const index = (offsetY * width + offsetX) * 4;
-                        r += data[index] * weight;
-                        g += data[index + 1] * weight;
-                        b += data[index + 2] * weight;
-                    }
-                }
-
-                const newIndex = (y * width + x) * 4;
-                output[newIndex] = Math.min(Math.max(r, 0), 255);
-                output[newIndex + 1] = Math.min(Math.max(g, 0), 255);
-                output[newIndex + 2] = Math.min(Math.max(b, 0), 255);
-                output[newIndex + 3] = 255; // Mantener la opacidad
+                sumR += data[index] * weight;
+                sumG += data[index + 1] * weight;
+                sumB += data[index + 2] * weight;
             }
         }
 
-        // Actualizamos la imagen con el resultado procesado
-        for (let i = 0; i < data.length; i++) {
-            data[i] = output[i];
-        }
+        const newIndex = (y * this.width + x) * 4;
+        output[newIndex] = Math.min(Math.max(sumR, 0), 255);
+        output[newIndex + 1] = Math.min(Math.max(sumG, 0), 255);
+        output[newIndex + 2] = Math.min(Math.max(sumB, 0), 255);
+        output[newIndex + 3] = 255; // Mantener la opacidad completa
     }
 }

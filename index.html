@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,74 +9,81 @@
     <title>MyPaint</title>
 
 </head>
+
 <body>
     <div class="container">
-       
+
         <section class="tools-board">
-           <div>
-            <h1>MY PAINT</h1>
-        </div>
+            <div class="logo">
+                <h1><i class="bi bi-palette"></i> MY PAINT</h1>
+            </div>
             <div class="row">
-              
+
                 <ul class=" options">
                     <label class="title">Herramientas</label>
-                    <li class="option" id="penButton"><i class="bi bi-pencil"> Lapiz</i></li>
-                    <li class="option" id="eraserButton"><i class="bi bi-eraser-fill"></i>  Goma</li>
-                    <li class="option"><input oninput="change_LineWidth(this.value)" value="5" id="lineWidth" type="range" min="1" max=" 50" class="range">
+                    <li class="option" id="penButton"><i class="bi bi-pencil"></i> <span> Lapiz</span></li>
+                    <li class="option" id="eraserButton"><i class="bi bi-eraser-fill"></i> Goma</li>
+                    <li class="option"><input oninput="change_LineWidth(this.value)" value="5" id="lineWidth"
+                            type="range" min="1" max=" 50" class="range">
                     </li>
-                    </ul>
+                </ul>
             </div>
 
             <div class="row colors">
                 <label class="title">Colores</label>
                 <ul class="options ">
-                   
-                    <li class="option" onClick="change_color('blue')"  style="background: red"></li>
-                    <li class="option" onClick="change_color('blue')"  style="background: blue"></li>
-                    <li class="option" onClick="change_color('green')"  style="background: green"></li>
-                    <li class="option" onClick="change_color('yellow')"  style="background: yellow"></li>
-                    <li class="option" onClick="change_color('black')"  style="background:black"></li>
-                    <li class="option" onClick="change_color('white')"  style="background: white"></li>
+
+                    <li class="option" onClick="change_color('blue')" style="background: red"></li>
+                    <li class="option" onClick="change_color('blue')" style="background: blue"></li>
+                    <li class="option" onClick="change_color('green')" style="background: green"></li>
+                    <li class="option" onClick="change_color('yellow')" style="background: yellow"></li>
+                    <li class="option" onClick="change_color('black')" style="background:black"></li>
+                    <li class="option" onClick="change_color('white')" style="background: white"></li>
                     <li class="color-select">
-                        <input oninput="change_color(this.value)"  type="color" class="color-select" style="background:(value)"  ></li>
+                        <input oninput="change_color(this.value)" type="color" class="color-select"
+                            style="background:(value)">
+                    </li>
                 </ul>
             </div>
 
             <div class="row">
-                
-                <ul class="options" >
+
+                <ul class="options">
                     <label class="title">Filtros</label>
+                    <li class="option" onclick="aplicarFiltroEscalaGrises()">Blanco y negro</li>
                     <li class="option" onclick="aplicarFiltroNegativo()">Negativo</li>
                     <li class="option" onclick="aplicarFiltroSepia()"> Sepia</li>
                     <li class="option" onclick="aplicarFiltroBinarizacion()">Binarización</li>
-                    <li class="option" onclick="aplicarFiltroBlur()">Aplicar blur</li>
-                    <li class="option" onclick="aplicarFiltroDeteccionBordes()">deteccion bordes</li>
-                    <li class="option" onclick="aplicarFiltroConvolucion()">Aplicar Filtro Convolución</li>
-                     <li class="option"> 
-                    <span >brillo:</span>
-                    <input class="range" type="range" id="brilloRange" min="-100" max="100" value="0" step="0" onchange="aplicarFiltroBrillo()">
-                    </li>  
+                    <li class="option" onclick="aplicarFiltroBlur()">Blur</li>
+                    <li class="option" onclick="aplicarFiltroDeteccionBordes()">Deteccion bordes</li>
+                    <li class="option" onclick="aplicarFiltroConvolucion()">Deteccion bordes 2</li>
                     <li class="option">
-                    <span >Saturación:</span>
-                    <input class="range" type="range" id="saturacionRange" min="0" max="200" value="100" step="1" oninput="aplicarFiltroSaturacion()"> 
-                </li>     
-              </ul>
+                        <span>brillo:</span>
+                        <input class="range" type="range" id="brilloRange" min="-100" max="100" value="0" step="0"
+                            onchange="aplicarFiltroBrillo()">
+                    </li>
+                    <li class="option">
+                        <span>Saturación:</span>
+                        <input class="range" type="range" id="saturacionRange" min="0" max="200" value="100" step="1"
+                            oninput="aplicarFiltroSaturacion()">
+                    </li>
+                </ul>
 
             </div>
 
-              <div class="row buttons">
+            <div class="row buttons">
                 <div class="b1">
-            <button class="clear" onClick="undo()" >Deshacer</button>   
-            <button  class="clear" onClick="clearCanvas()"> Limpiar</button>
-        </div>
-        <div class="b1">
-            <button class="save" id="uploadImageButton">Cargar Imagen
-            <input type="file" id="imageInput" accept="image/*" style="display:none;">
-            </button>
-            <button class="save" id="saveButton">Guardar Imagen</button>
-        </div>
-        </div>
-            
+                    <button class="clear" onClick="undo()"><i class="bi bi-arrow-counterclockwise"></i>  Deshacer</button>
+                    <button class="clear" onClick="clearCanvas()"> Limpiar</button>
+                </div>
+                <div class="b1">
+                    <button class="save" id="uploadImageButton">Cargar Imagen
+                        <input type="file" id="imageInput" accept="image/*" style="display:none;">
+                    </button>
+                    <button class="save" id="saveButton">Guardar Imagen</button>
+                </div>
+            </div>
+
         </section>
         <section class="drawing-board">
             <canvas id="canvas"></canvas>
@@ -95,7 +103,8 @@
 <script src="js/filtros/filtroSaturacion.js"></script>
 <script src="js/filtros/filtroDeteccionBordes.js"></script>
 <script src="js/filtros/filtroConvolucion.js"></script>
-
+<script src="js/filtros/filtroEscalaGrises.js"></script>
 
 <script src="js/Script.js"></script>
+
 </html>

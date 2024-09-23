@@ -1,51 +1,39 @@
 class FiltroBlur extends Filtro {
-   
-    aplicarFiltro() {
-        const width = this.width;
-        const height = this.height;
-       
-        let imageData=ctx.getImageData(0,0,width,height);
-        let data= imageData.data;
+    constructor(ctx, width, height) {
+        super(ctx, width, height);
+    }
 
-        let kernel = [];  // Matriz de convolución para el blur
-
-
-        for(let i=0; i<3; i++){
-            kernel[i]=[];
-            for(let j=0; j<3;j++){
-                kernel[i][j]=1
+    calcularNuevoValorPixel(x, y, data, output) {
+        let sumR = 0, sumG = 0, sumB = 0;
+        let kernelSum = 0;
+    
+        // Kernel de blur (3x3 con todos valores de 1)
+        const kernel = [
+            [1, 1, 1],
+            [1, 1, 1],
+            [1, 1, 1]
+        ];
+    
+        for (let j = -1; j <= 1; j++) {
+            for (let i = -1; i <= 1; i++) {
+                // Extender bordes para evitar valores fuera de los límites
+                let offsetX = Math.min(Math.max(x + i, 0), this.width - 1);
+                let offsetY = Math.min(Math.max(y + j, 0), this.height - 1);
+    
+                const index = (offsetY * this.width + offsetX) * 4;
+                let value = kernel[j + 1][i + 1];
+    
+                sumR += data[index] * value;
+                sumG += data[index + 1] * value;
+                sumB += data[index + 2] * value;
+                kernelSum += value;
             }
         }
-
-        let kernelSize=3;
-        for (let y = 1; y < height - 1; y++) {
-            for (let x = 1; x < width - 1; x++) {
-                let sumR = 0, sumG = 0, sumB = 0;
-                
-                for (let j = -1; j <= 1; j++) {
-                    for (let i = -1; i <= 1; i++) {
-                        let offsetX = x + i;
-                        let offsetY = y + j;
-
-                        if (offsetX >= 0 && offsetX < width && offsetY >= 0 && offsetY < height) {
-                            const index = (offsetY * width + offsetX) * 4;
-
-                            let value = kernel[j + 1][i + 1];
-                            sumR += data[index] * value;
-                            sumG += data[index + 1] * value;
-                            sumB += data[index + 2] * value;
-                        }
-                    }
-                }
-
-                const newIndex = (y * width + x) * 4;
-                data[newIndex] = sumR / 9;
-                data[newIndex + 1] = sumG / 9;
-                data[newIndex + 2] = sumB / 9;
-                data[newIndex + 3] = 255;  // Opacidad completa
-            }
-        }
-
-        this.ctx.putImageData(imageData, 0, 0);
+    
+        const newIndex = (y * this.width + x) * 4;
+        output[newIndex] = sumR / kernelSum;
+        output[newIndex + 1] = sumG / kernelSum;
+        output[newIndex + 2] = sumB / kernelSum;
+        output[newIndex + 3] = 255; // Mantener la opacidad completa
     }
 }

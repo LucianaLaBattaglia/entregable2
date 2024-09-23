@@ -7,7 +7,7 @@ class FiltroNegativo extends Filtro {
             data[i] = 255 - data[i];       // Rojo
             data[i + 1] = 255 - data[i + 1]; // Verde
             data[i + 2] = 255 - data[i + 2]; // Azul
-            // data[i + 3] se mantiene igual (opacidad)
+            
         }
     }
 }

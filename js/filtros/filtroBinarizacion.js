@@ -4,11 +4,11 @@ class FiltroBinarizacion extends Filtro {
         super(ctx, widht, height);
     }
 
-    processPixels(pixels) {
-        for (let i = 0; i < pixels.length; i += 4) {
-            let avg = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+    processPixels(data) {
+        for (let i = 0; i < data.length; i += 4) {
+            let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
             let binValue = avg < 128 ? 0 : 255;
-            pixels[i] = pixels[i + 1] = pixels[i + 2] = binValue; // Blanco o negro
+            data[i] = data[i + 1] = data[i + 2] = binValue; // Blanco o negro
         }
     }
 }

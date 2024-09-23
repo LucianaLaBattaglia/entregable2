@@ -4,7 +4,7 @@
 margin:0;
 padding: 0;
 box-sizing: border-box;
-font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', 'sans-serif';
 }
 
 
@@ -15,7 +15,7 @@ body{
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background:#f7e7f7 ;
+    background:#cae7f5 ;
 
 }
 
@@ -25,20 +25,22 @@ body{
     width: 100%;
     gap: 10px;
     margin-left: 20px;
-   
- 
+    align-items: center;
+    justify-content: center;
 
 }
 
 section {
     background-color: #fff;
     border-radius: 7px;
+  
 }
 
 .tools-board{
     width: 300px;
     padding: 15px 22px opx;
-  
+    border: 1px solid gray;
+    margin-left: 90px;
 }
 .tools-board .row {
     margin-bottom: 20px;
@@ -55,6 +57,7 @@ section {
     align-items: center;
     margin-bottom: 10px;
     margin-left: 2px;
+    margin-right: 2px;
     margin-top: 5px;
     cursor: pointer;
 
@@ -76,23 +79,21 @@ section {
     font-size: larger;
     color: #5a6168;
     padding-left: 10px;
-   padding-bottom: 10px;
-   margin-bottom: 10PX;
+   padding-bottom: 15px;
+   margin-bottom: 15PX;
 
 }
 
 .option .range{
-    width: 100%;
+    width: 50%;
     height: 5px;
     margin-top: 10px, 10PX, 10PX;
-
-    
 }
 
 .colors .options{
 display: flex;
-justify-content: space-between;
-margin: 1px 1px 1px 1px;
+justify-content:space-around;
+align-items: center;
 
 }
 
@@ -105,8 +106,6 @@ input[type="color"] {
     box-sizing: border-box;
     border: 1px solid rgb(108, 68, 97);
     align-self: center;
-    margin: 10px 2px 0 2px;
-
     padding: 0;
     cursor: pointer;
     background-color: initial;
@@ -125,10 +124,12 @@ input[type="color"] {
     border-radius: 50%;
     border: 1px solid black;
     align-self: center;
+    justify-content: center;
     margin: 0 2px;
     margin-top: 10px;
-    margin-left: 10px;
-    margin-left: 5px;
+    margin-left: 0px;
+    margin-right: 5px;
+    padding: 0%;
 }
 
 div.row.buttons{
@@ -171,17 +172,25 @@ align-items: center;
 
 .drawing-board{
    flex:1;
-   background-color: green;
-   margin-right: 20px;
-   border: 1px solid black;
+    width: 200px;
+   margin-right: 90px;
+   
    display: flex;
    align-items: center;
    justify-content: center;
-
+   background:#cae7f5 ;
 }
 canvas{
     border-radius: 7px;
+    border:1px solid gray;
 }
 .b1{
     display: flex;
+}
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    color: #4A98F7;
 }

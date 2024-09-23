@@ -4,11 +4,11 @@ class FiltroBrillo extends Filtro {
         this.brillo = brillo;  // Brillo es un valor de ajuste (puede ser positivo o negativo)
     }
 
-    processPixels(pixels) {
-        for (let i = 0; i < pixels.length; i += 4) {
-            pixels[i] += this.brillo;     // Red
-            pixels[i + 1] += this.brillo; // Green
-            pixels[i + 2] += this.brillo; // Blue
+    processPixels(data) {
+        for (let i = 0; i < data.length; i += 4) {
+            data[i] += this.brillo;     // Red
+            data[i + 1] += this.brillo; // Green
+            data[i + 2] += this.brillo; // Blue
         }
     }
 }
